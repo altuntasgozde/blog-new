@@ -1,22 +1,20 @@
-import React from "react";
+import React, {useState} from "react";
 
-export const NewEntry = () => {
+export const NewEntry = ({ onEntryAdded }) => {
   const [inputValue, setInputValue] = useState("");
   const [textareaValue, setTextareaValue] = useState("");
-  const [entries, setEntries] = useState([]);
 
   const handleSubmit = () => {
     const newEntry = {
       input: inputValue,
       textarea: textareaValue,
     };
-    setEntries([...entries, newEntry]);
+    onEntryAdded(newEntry);
     setInputValue("");
     setTextareaValue("");
-    console.log(entries);
   };
   return (
-    <div>
+    <div className='container mx-auto px-24 flex items-center flex-col'>
       <input
         type="text"
         value={inputValue}
@@ -33,11 +31,7 @@ export const NewEntry = () => {
         placeholder="This is a textarea placeholder"
       ></textarea>
 
-      <button
-        type="button"
-        onClick={handleSubmit}
-        className="py-3 px-4 w-1/3 mt-5 justify-center inline-flex items-center text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-      >
+      <button onClick={handleSubmit} className="py-3 px-4 w-1/3 mt-5 justify-center inline-flex items-center text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
         Add
       </button>
     </div>
