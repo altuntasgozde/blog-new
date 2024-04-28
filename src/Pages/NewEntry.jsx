@@ -1,17 +1,22 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 export const NewEntry = ({ onEntryAdded }) => {
   const [inputValue, setInputValue] = useState("");
   const [textareaValue, setTextareaValue] = useState("");
+  const [status, setStatus] = useState(false)
 
   const handleSubmit = () => {
     const newEntry = {
       input: inputValue,
       textarea: textareaValue,
     };
-    onEntryAdded(newEntry);
-    setInputValue("");
-    setTextareaValue("");
+    if (newEntry.input !== "" && newEntry.textarea !== "") {
+      onEntryAdded(newEntry);
+      setInputValue("");
+      setTextareaValue("");
+      setStatus(true)
+    }
+
   };
   return (
     <div className='container mx-auto px-24 flex items-center flex-col'>
@@ -34,6 +39,11 @@ export const NewEntry = ({ onEntryAdded }) => {
       <button onClick={handleSubmit} className="py-3 px-4 w-1/3 mt-5 justify-center inline-flex items-center text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
         Add
       </button>
+
+      {status ? <div className="mt-5 bg-teal-100 border border-teal-200 text-sm text-teal-800 rounded-lg p-4" role="alert">
+        <span className="font-bold">Success!</span> entry added.
+      </div> : null}
+
     </div>
   );
 };
